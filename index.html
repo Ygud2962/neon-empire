@@ -7,294 +7,225 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:     #02040e;
-  --bg2:    #060d1c;
-  --bg3:    #0a1428;
-  --cyan:   #00fff9;
-  --pink:   #ff2d78;
-  --yellow: #f5e642;
-  --green:  #39ff14;
-  --purple: #b742f5;
-  --dim:    #1e3a5a;
-  --text:   #c8e8ff;
-  --muted:  #3a6080;
-  --card:   rgba(0,255,249,0.03);
-  --border: rgba(0,255,249,0.10);
+:root{
+  --bg:#02040e;--bg2:#060d1c;--bg3:#0a1428;
+  --cyan:#00fff9;--pink:#ff2d78;--yellow:#f5e642;
+  --green:#39ff14;--purple:#b742f5;--orange:#ff8c00;
+  --dim:#1e3a5a;--text:#c8e8ff;--muted:#3a6080;
+  --card:rgba(0,255,249,0.03);--border:rgba(0,255,249,0.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow-x:hidden}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Rajdhani',sans-serif;
-  min-height:100vh;
-}
-
-/* SCANLINES */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);
-}
-
-/* GRID BG */
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:
-    linear-gradient(rgba(0,255,249,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,249,0.025) 1px,transparent 1px);
-  background-size:44px 44px;
-}
-
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,255,249,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,249,0.025) 1px,transparent 1px);background-size:44px 44px;}
 canvas#rain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.15}
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:10px 12px 88px;}
 
-.app{
-  position:relative;z-index:1;
-  max-width:480px;margin:0 auto;
-  padding:10px 12px 88px;
-}
-
-/* ── HEADER ── */
-.hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:8px 0 10px;
-  border-bottom:1px solid var(--border);
-  margin-bottom:10px;
-}
-.logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:19px;font-weight:900;letter-spacing:3px;
-  background:linear-gradient(90deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 10px rgba(0,255,249,.5));
-  animation:glitch 7s infinite;
-}
-@keyframes glitch{
-  0%,93%,100%{filter:drop-shadow(0 0 10px rgba(0,255,249,.5));transform:none}
-  94%{filter:drop-shadow(-2px 0 var(--pink)) drop-shadow(2px 0 var(--cyan));transform:translateX(1px)}
-  95%{filter:drop-shadow(2px 0 var(--pink)) drop-shadow(-2px 0 var(--cyan));transform:translateX(-1px)}
-  96%{filter:drop-shadow(0 0 10px rgba(0,255,249,.5));transform:none}
-}
-.lvl-badge{
-  font-family:'Share Tech Mono',monospace;
-  font-size:10px;letter-spacing:2px;
-  color:var(--yellow);
-  border:1px solid rgba(245,230,66,.4);
-  padding:3px 10px;border-radius:3px;
-  background:rgba(245,230,66,.06);
-  text-shadow:0 0 8px rgba(245,230,66,.7);
-  animation:blink-b 2.5s infinite;
-}
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+.logo{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(0,255,249,.5));animation:glitch 7s infinite;}
+@keyframes glitch{0%,93%,100%{filter:drop-shadow(0 0 10px rgba(0,255,249,.5));transform:none}94%{filter:drop-shadow(-2px 0 var(--pink)) drop-shadow(2px 0 var(--cyan));transform:translateX(1px)}95%{transform:translateX(-1px)}96%{transform:none}}
+.hdr-right{display:flex;align-items:center;gap:6px;}
+.lvl-badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--yellow);border:1px solid rgba(245,230,66,.4);padding:3px 8px;border-radius:3px;background:rgba(245,230,66,.06);text-shadow:0 0 8px rgba(245,230,66,.7);animation:blink-b 2.5s infinite;}
+.charisma-badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--purple);border:1px solid rgba(183,66,245,.4);padding:3px 7px;border-radius:3px;background:rgba(183,66,245,.06);cursor:pointer;}
 @keyframes blink-b{0%,100%{border-color:rgba(245,230,66,.3)}50%{border-color:rgba(245,230,66,.9)}}
 
-/* ── STATS ── */
-.stats{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:7px;margin-bottom:9px;
-}
-.s-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:5px;padding:8px 5px;text-align:center;
-  position:relative;overflow:hidden;
-}
-.s-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
-}
-.s-val{
-  font-family:'Orbitron',monospace;
-  font-size:13px;font-weight:700;
-  color:var(--cyan);
-  text-shadow:0 0 10px rgba(0,255,249,.7);
-}
+/* STATS */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px;}
+.s-card{background:var(--card);border:1px solid var(--border);border-radius:5px;padding:8px 5px;text-align:center;position:relative;overflow:hidden;}
+.s-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
+.s-val{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--cyan);text-shadow:0 0 10px rgba(0,255,249,.7);}
 .s-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:2px}
 
-/* ── XP BAR ── */
+/* XP BAR */
 .xp-wrap{margin-bottom:10px}
 .xp-row{display:flex;justify-content:space-between;margin-bottom:3px}
 .xp-row span{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px}
 .xp-track{height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;border:1px solid rgba(0,255,249,.08)}
 .xp-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:2px;transition:width .5s ease;box-shadow:0 0 8px rgba(0,255,249,.5)}
 
-/* ── CITY CANVAS ── */
-.city-wrap{
-  position:relative;margin-bottom:11px;
-  border-radius:6px;overflow:hidden;
-  border:1px solid var(--border);
-  cursor:pointer;
-  background:linear-gradient(180deg,#010208 0%,#060f20 60%,#091830 100%);
-  -webkit-user-select:none;user-select:none;
-}
+/* DAILY */
+.daily-btn{width:100%;padding:10px;border:none;border-radius:5px;cursor:pointer;margin-bottom:9px;background:linear-gradient(135deg,rgba(245,230,66,.15),rgba(245,230,66,.05));border:1px solid rgba(245,230,66,.4);font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--yellow);text-shadow:0 0 8px rgba(245,230,66,.7);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;}
+.daily-btn:active{transform:scale(0.97)}
+.daily-btn.claimed{opacity:.4;pointer-events:none;color:var(--muted);}
+.daily-btn .d-icon{font-size:16px}
+.daily-streak{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-left:auto;}
+
+/* CITY CANVAS */
+.city-wrap{position:relative;margin-bottom:11px;border-radius:6px;overflow:hidden;border:1px solid var(--border);cursor:pointer;background:linear-gradient(180deg,#010208 0%,#060f20 60%,#091830 100%);-webkit-user-select:none;user-select:none;}
 #cityCanvas{display:block;width:100%;height:190px}
-.city-corners span{
-  position:absolute;width:14px;height:14px;
-  border-color:var(--cyan);border-style:solid;opacity:.55;
-}
-.city-corners .tl{top:6px;left:6px;border-width:2px 0 0 2px}
-.city-corners .tr{top:6px;right:6px;border-width:2px 2px 0 0}
-.city-corners .bl{bottom:6px;left:6px;border-width:0 0 2px 2px}
-.city-corners .br{bottom:6px;right:6px;border-width:0 2px 2px 0}
-
-.tap-hint{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  text-align:center;pointer-events:none;transition:opacity .5s;
-}
-.ring{
-  width:58px;height:58px;border-radius:50%;
-  border:2px solid var(--cyan);margin:0 auto 8px;
-  display:flex;align-items:center;justify-content:center;font-size:24px;
-  animation:ring-pulse 1.6s infinite;
-}
-@keyframes ring-pulse{
-  0%{box-shadow:0 0 0 0 rgba(0,255,249,.55)}
-  70%{box-shadow:0 0 0 18px rgba(0,255,249,0)}
-  100%{box-shadow:0 0 0 0 rgba(0,255,249,0)}
-}
+.city-corners span{position:absolute;width:14px;height:14px;border-color:var(--cyan);border-style:solid;opacity:.55;}
+.city-corners .tl{top:6px;left:6px;border-width:2px 0 0 2px}.city-corners .tr{top:6px;right:6px;border-width:2px 2px 0 0}
+.city-corners .bl{bottom:6px;left:6px;border-width:0 0 2px 2px}.city-corners .br{bottom:6px;right:6px;border-width:0 2px 2px 0}
+.tap-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;transition:opacity .5s;}
+.ring{width:58px;height:58px;border-radius:50%;border:2px solid var(--cyan);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:24px;animation:ring-pulse 1.6s infinite;}
+@keyframes ring-pulse{0%{box-shadow:0 0 0 0 rgba(0,255,249,.55)}70%{box-shadow:0 0 0 18px rgba(0,255,249,0)}100%{box-shadow:0 0 0 0 rgba(0,255,249,0)}}
 .tap-hint p{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:3px;text-shadow:0 0 8px var(--cyan)}
-
-.cpop{
-  position:absolute;pointer-events:none;z-index:50;
-  font-family:'Orbitron',monospace;font-size:14px;font-weight:700;
-  color:var(--yellow);text-shadow:0 0 12px rgba(245,230,66,.9);
-  animation:pop-up .85s ease-out forwards;
-}
+.cpop{position:absolute;pointer-events:none;z-index:50;font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--yellow);text-shadow:0 0 12px rgba(245,230,66,.9);animation:pop-up .85s ease-out forwards;}
 @keyframes pop-up{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-55px) scale(1.5)}}
 
-/* ── COMBO ── */
+/* COMBO */
 .combo-row{display:flex;align-items:center;gap:8px;margin-bottom:9px;height:18px}
 .c-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--pink);letter-spacing:2px;text-shadow:0 0 6px var(--pink);flex-shrink:0}
 .c-track{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
 .c-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:2px;transition:width .1s;box-shadow:0 0 6px rgba(255,45,120,.6)}
 .c-val{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--pink);text-shadow:0 0 6px var(--pink);flex-shrink:0;min-width:28px;text-align:right}
 
-/* ── SECTION LABEL ── */
-.sec{
-  font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;
-  color:var(--cyan);opacity:.7;margin-bottom:8px;text-transform:uppercase;
-  display:flex;align-items:center;gap:8px;
-}
+/* SEC LABEL */
+.sec{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--cyan);opacity:.7;margin-bottom:8px;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
 .sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,255,249,.3),transparent)}
 
-/* ── BUSINESS GRID ── */
+/* BIZ */
 .biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.biz{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:5px;padding:11px 9px;cursor:pointer;
-  transition:border-color .2s,transform .1s;
-  position:relative;overflow:hidden;
-}
-.biz::before{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(0,255,249,.06),transparent);
-  transition:left .4s;
-}
-.biz:active::before{left:100%}
-.biz:active{transform:scale(0.95)}
+.biz{background:var(--card);border:1px solid var(--border);border-radius:5px;padding:11px 9px;cursor:pointer;transition:border-color .2s,transform .1s;position:relative;overflow:hidden;}
+.biz::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,255,249,.06),transparent);transition:left .4s;}
+.biz:active::before{left:100%}.biz:active{transform:scale(0.95)}
 .biz.can{border-color:rgba(57,255,20,.45);box-shadow:0 0 10px rgba(57,255,20,.07)}
-.biz.max{opacity:.45;pointer-events:none}
-.biz-lv{
-  position:absolute;top:6px;right:6px;
-  font-family:'Share Tech Mono',monospace;font-size:8px;
-color:var(--cyan);background:rgba(0,255,249,.08);
-  border:1px solid rgba(0,255,249,.2);padding:1px 5px;border-radius:2px;
-}
-.biz-ico{font-size:26px;margin-bottom:3px}
-.biz-name{font-size:12px;font-weight:700;color:var(--text)}
+.biz.max{opacity:.45;pointer-events:none}.biz.locked{opacity:.5;cursor:not-allowed;}
+.biz-lv{position:absolute;top:6px;right:6px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--cyan);background:rgba(0,255,249,.08);border:1px solid rgba(0,255,249,.2);padding:1px 5px;border-radius:2px;}
+.biz-ico{font-size:26px;margin-bottom:3px}.biz-name{font-size:12px;font-weight:700;color:var(--text)}
 .biz-inc{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--green);margin-top:1px}
 .biz-own{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px}
 .biz-cost{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--yellow);text-shadow:0 0 6px rgba(245,230,66,.5);margin-top:5px}
+.biz-unlock{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--pink);margin-top:3px;line-height:1.3}
 
-/* ── UPGRADES ── */
+/* UPGRADES */
 .upg-list{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
-.upg{
-  background:var(--card);border:1px solid rgba(183,66,245,.18);
-  border-radius:5px;padding:10px 12px;
-  display:flex;align-items:center;gap:11px;
-  cursor:pointer;transition:all .15s;position:relative;overflow:hidden;
-}
+.upg{background:var(--card);border:1px solid rgba(183,66,245,.18);border-radius:5px;padding:10px 12px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;}
 .upg::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--purple),transparent)}
-.upg:active{transform:scale(0.98)}
-.upg.can{border-color:rgba(183,66,245,.55);box-shadow:0 0 10px rgba(183,66,245,.1)}
-.upg.done{opacity:.35;pointer-events:none}
-.upg-ico{font-size:22px;flex-shrink:0}
-.upg-info{flex:1}
+.upg:active{transform:scale(0.98)}.upg.can{border-color:rgba(183,66,245,.55);box-shadow:0 0 10px rgba(183,66,245,.1)}
+.upg.done{opacity:.35;pointer-events:none}.upg.locked{opacity:.4;cursor:not-allowed;}
+.upg-ico{font-size:22px;flex-shrink:0}.upg-info{flex:1}
 .upg-name{font-size:12px;font-weight:700;color:var(--text)}
 .upg-desc{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-top:1px}
+.upg-unlock{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--pink);margin-top:2px}
 .upg-cost{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--yellow);text-shadow:0 0 5px rgba(245,230,66,.5);flex-shrink:0}
 
-/* ── NAV ── */
-.nav{
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:100%;max-width:480px;
-  display:flex;background:rgba(2,4,14,.97);
-  border-top:1px solid var(--border);
-  backdrop-filter:blur(20px);z-index:100;
-}
-.nb{
-  flex:1;padding:8px 4px 11px;background:none;border:none;
-  cursor:pointer;color:var(--muted);
-  font-family:'Rajdhani',sans-serif;font-size:9px;
-  letter-spacing:1px;text-transform:uppercase;
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  transition:color .2s;position:relative;
-}
-.nb.on{color:var(--cyan)}
-.nb.on::after{
-  content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;
-  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
-  box-shadow:0 0 8px var(--cyan);
-}
-.nb .ni{font-size:18px}
+/* QUESTS */
+.quest-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.quest{background:rgba(245,230,66,.03);border:1px solid rgba(245,230,66,.15);border-radius:5px;padding:11px 13px;position:relative;overflow:hidden;}
+.quest::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--yellow),transparent)}
+.quest.done{border-color:rgba(57,255,20,.3);background:rgba(57,255,20,.03);}
+.quest.done::before{background:linear-gradient(180deg,var(--green),transparent)}
+.quest-head{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.quest-ico{font-size:20px}.quest-name{font-size:12px;font-weight:700;color:var(--text);flex:1}
+.quest-reward{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--yellow);text-shadow:0 0 5px rgba(245,230,66,.5)}
+.quest-desc{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px}
+.quest-prog-track{height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
+.quest-prog-fill{height:100%;background:linear-gradient(90deg,var(--yellow),var(--orange));border-radius:2px;transition:width .4s}
+.quest-prog-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;text-align:right}
+.quest.done .quest-prog-fill{background:linear-gradient(90deg,var(--green),var(--cyan))}
 
-/* ── TABS ── */
-.tab{display:none;animation:fadein .22s ease}
-.tab.on{display:block}
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
+.ach{background:var(--card);border:1px solid var(--border);border-radius:5px;padding:10px 6px;text-align:center;}
+.ach.unlocked{border-color:rgba(245,230,66,.5);background:rgba(245,230,66,.05);box-shadow:0 0 12px rgba(245,230,66,.08);}
+.ach.locked-ach{opacity:.35;filter:grayscale(1)}
+.ach-ico{font-size:22px;margin-bottom:4px}.ach-name{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--text);line-height:1.2}
+.ach-bonus{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--yellow);margin-top:2px}
+
+/* CHARISMA */
+.charisma-panel{background:rgba(183,66,245,.05);border:1px solid rgba(183,66,245,.25);border-radius:6px;padding:13px;margin-bottom:12px;}
+.charisma-title{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--purple);letter-spacing:2px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.charisma-lvl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--purple);background:rgba(183,66,245,.15);border:1px solid rgba(183,66,245,.3);padding:2px 8px;border-radius:2px;}
+.charisma-bar-track{height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;border:1px solid rgba(183,66,245,.15)}
+.charisma-bar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:3px;transition:width .5s;box-shadow:0 0 8px rgba(183,66,245,.5)}
+.charisma-desc{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px}
+.charisma-perks{display:flex;flex-wrap:wrap;gap:5px}
+.charisma-perk{font-family:'Share Tech Mono',monospace;font-size:8px;padding:2px 7px;border-radius:2px;background:rgba(183,66,245,.12);border:1px solid rgba(183,66,245,.3);color:var(--purple);}
+.charisma-perk.locked-p{opacity:.3;filter:grayscale(1)}
+.charisma-next{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);margin-top:6px;}
+
+/* ════ REFERRAL PANEL ════ */
+.ref-panel{background:rgba(255,140,0,.05);border:1px solid rgba(255,140,0,.3);border-radius:6px;padding:14px;margin-bottom:12px;position:relative;overflow:hidden;}
+.ref-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);}
+.ref-title{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--orange);letter-spacing:2px;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.ref-sub{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:10px;}
+.ref-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px;}
+.ref-stat{background:rgba(255,140,0,.06);border:1px solid rgba(255,140,0,.2);border-radius:4px;padding:8px 5px;text-align:center;}
+.ref-stat-val{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--orange);text-shadow:0 0 8px rgba(255,140,0,.6);}
+.ref-stat-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);margin-top:2px}
+.ref-tiers{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+.ref-tier{background:rgba(0,0,0,.2);border:1px solid rgba(255,140,0,.15);border-radius:4px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;}
+.ref-tier.active{border-color:rgba(255,140,0,.55);background:rgba(255,140,0,.08);}
+.ref-tier-name{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text);}
+.ref-tier-req{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);}
+.ref-tier-bonus{font-family:'Orbitron',monospace;font-size:10px;color:var(--orange);}
+.ref-tier-lock{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--pink);}
+.ref-btn{width:100%;padding:10px;border:none;border-radius:4px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,rgba(255,140,0,.8),rgba(255,60,0,.6));color:#fff;box-shadow:0 0 18px rgba(255,140,0,.3);transition:transform .1s;margin-bottom:6px;}
+.ref-btn:active{transform:scale(0.97)}
+.ref-link-row{background:rgba(0,0,0,.3);border:1px solid rgba(255,140,0,.2);border-radius:4px;padding:8px 10px;display:flex;align-items:center;gap:8px;}
+.ref-link-txt{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ref-copy-btn{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--orange);border:1px solid rgba(255,140,0,.4);background:rgba(255,140,0,.1);padding:4px 8px;border-radius:3px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.ref-history{display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;}
+.ref-entry{background:rgba(0,0,0,.2);border:1px solid rgba(255,140,0,.1);border-radius:4px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;}
+.ref-entry-name{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text);}
+.ref-entry-earned{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--orange);}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;background:rgba(2,4,14,.97);border-top:1px solid var(--border);backdrop-filter:blur(20px);z-index:100;}
+.nb{flex:1;padding:8px 2px 11px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;position:relative;}
+.nb.on{color:var(--cyan)}.nb.on::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 8px var(--cyan);}
+.nb .ni{font-size:17px}.nb .nb-badge{position:absolute;top:5px;right:calc(50% - 18px);background:var(--pink);color:#fff;font-size:7px;font-family:'Share Tech Mono',monospace;padding:1px 4px;border-radius:8px;min-width:14px;text-align:center;}
+
+/* TABS */
+.tab{display:none;animation:fadein .22s ease}.tab.on{display:block}
 @keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-/* ── NOTIF ── */
-.notif{
-  position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-6px);
-  font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;
-  padding:8px 20px;border-radius:3px;
-  z-index:9999;opacity:0;pointer-events:none;
-  transition:opacity .25s,transform .25s;white-space:nowrap;
-}
+/* NOTIF */
+.notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-6px);font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;padding:8px 20px;border-radius:3px;z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;}
 .notif.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.notif.ok {background:var(--green);color:#000;box-shadow:0 0 20px rgba(57,255,20,.5)}
+.notif.ok{background:var(--green);color:#000;box-shadow:0 0 20px rgba(57,255,20,.5)}
 .notif.err{background:var(--pink);color:#fff;box-shadow:0 0 20px rgba(255,45,120,.5)}
 .notif.inf{background:var(--cyan);color:#000;box-shadow:0 0 20px rgba(0,255,249,.5)}
+.notif.ach{background:var(--yellow);color:#000;box-shadow:0 0 20px rgba(245,230,66,.5)}
+.notif.ref{background:var(--orange);color:#fff;box-shadow:0 0 20px rgba(255,140,0,.5)}
 
-/* ── OFFLINE MODAL ── */
+/* MODALS */
 .modal-bg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center}
 .modal-bg.show{display:flex}
-.modal{
-  background:linear-gradient(135deg,#060d1c,#0a1428);
-  border:1px solid var(--cyan);border-radius:8px;
-  padding:26px 22px;text-align:center;max-width:275px;width:90%;
-  box-shadow:0 0 60px rgba(0,255,249,.12);position:relative;overflow:hidden;
-}
+.modal{background:linear-gradient(135deg,#060d1c,#0a1428);border:1px solid var(--cyan);border-radius:8px;padding:26px 22px;text-align:center;max-width:295px;width:90%;box-shadow:0 0 60px rgba(0,255,249,.12);position:relative;overflow:hidden;}
 .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
 .modal h2{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--cyan);letter-spacing:2px;margin-bottom:6px;text-shadow:0 0 10px var(--cyan)}
 .modal p{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted)}
 .modal .big{font-family:'Orbitron',monospace;font-size:24px;font-weight:700;color:var(--yellow);margin:14px 0;text-shadow:0 0 20px rgba(245,230,66,.6)}
-.mbtn{
-  width:100%;padding:11px;border:none;border-radius:4px;cursor:pointer;
-  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;
-  background:linear-gradient(135deg,var(--cyan),#0097a7);color:#000;
-  box-shadow:0 0 18px rgba(0,255,249,.3);transition:transform .1s;
-}
+.mbtn{width:100%;padding:11px;border:none;border-radius:4px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--cyan),#0097a7);color:#000;box-shadow:0 0 18px rgba(0,255,249,.3);transition:transform .1s;margin-top:6px;}
 .mbtn:active{transform:scale(0.97)}
+
+.qpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:500;background:linear-gradient(135deg,#060d1c,#0a1428);border:2px solid var(--yellow);border-radius:10px;padding:22px 26px;text-align:center;max-width:270px;width:88%;box-shadow:0 0 60px rgba(245,230,66,.3);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.qpop.show{transform:translate(-50%,-50%) scale(1)}
+.qpop h3{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--yellow);letter-spacing:2px;margin-bottom:8px}
+.qp-ico{font-size:36px;margin-bottom:8px}.qp-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
+.qp-reward{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);margin-bottom:14px;line-height:1.5}
+.qpop .mbtn{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;}
+
+.char-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:500;background:linear-gradient(135deg,#0d0618,#160a28);border:2px solid var(--purple);border-radius:10px;padding:22px 26px;text-align:center;max-width:270px;width:88%;box-shadow:0 0 60px rgba(183,66,245,.3);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.char-popup.show{transform:translate(-50%,-50%) scale(1)}
+.char-popup h3{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--purple);letter-spacing:2px;margin-bottom:8px}
+.cp-ico{font-size:36px;margin-bottom:8px}.cp-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.cp-desc{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.char-popup .mbtn{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;}
+
+.ref-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:500;background:linear-gradient(135deg,#100a02,#1a1008);border:2px solid var(--orange);border-radius:10px;padding:22px 26px;text-align:center;max-width:285px;width:90%;box-shadow:0 0 60px rgba(255,140,0,.3);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.ref-popup.show{transform:translate(-50%,-50%) scale(1)}
+.ref-popup h3{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--orange);letter-spacing:2px;margin-bottom:8px}
+.ref-popup .rp-ico{font-size:36px;margin-bottom:8px}
+.ref-popup .rp-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.ref-popup .rp-bonus{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--orange);margin-bottom:14px}
+.ref-popup .mbtn{background:linear-gradient(135deg,var(--orange),#ff4500);color:#fff;}
 </style>
 </head>
 <body>
 <canvas id="rain"></canvas>
-
 <div class="app">
 
   <div class="hdr">
     <div class="logo">NEON<span style="-webkit-text-fill-color:var(--pink);color:var(--pink)"> EMPIRE</span></div>
-    <div class="lvl-badge" id="lvlBadge">LVL_01</div>
+    <div class="hdr-right">
+      <div class="charisma-badge" id="charBadge">✨ CHR_01</div>
+      <div class="lvl-badge" id="lvlBadge">LVL_01</div>
+    </div>
   </div>
 
   <div class="stats">
@@ -304,15 +235,17 @@ color:var(--cyan);background:rgba(0,255,249,.08);
   </div>
 
   <div class="xp-wrap">
-    <div class="xp-row">
-      <span>XP · <span id="xpVal">0</span></span>
-      <span id="xpNext">NEXT: 100</span>
-    </div>
+    <div class="xp-row"><span>XP · <span id="xpVal">0</span></span><span id="xpNext">NEXT: 100</span></div>
     <div class="xp-track"><div class="xp-bar" id="xpBar" style="width:0%"></div></div>
   </div>
 
-  <!-- TAB: CITY -->
+  <!-- CITY TAB -->
   <div class="tab on" id="tabCity">
+    <button class="daily-btn" id="dailyBtn" onclick="claimDaily()">
+      <span class="d-icon">🎁</span>
+      <span id="dailyTxt">ЕЖЕДНЕВНЫЙ БОНУС</span>
+      <span class="daily-streak" id="dailyStreak">СЕРИЯ: 0</span>
+    </button>
     <div class="combo-row">
       <span class="c-lbl">COMBO</span>
       <div class="c-track"><div class="c-fill" id="cFill" style="width:0%"></div></div>
@@ -320,37 +253,59 @@ color:var(--cyan);background:rgba(0,255,249,.08);
     </div>
     <div class="city-wrap" id="cityWrap">
       <canvas id="cityCanvas"></canvas>
-      <div class="city-corners">
-        <span class="tl"></span><span class="tr"></span>
-        <span class="bl"></span><span class="br"></span>
-      </div>
-      <div class="tap-hint" id="tapHint">
-        <div class="ring">💼</div>
-        <p>TAP_TO_EARN</p>
-      </div>
+      <div class="city-corners"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+      <div class="tap-hint" id="tapHint"><div class="ring">💼</div><p>TAP_TO_EARN</p></div>
     </div>
   </div>
 
-  <!-- TAB: BUSINESS -->
+  <!-- BIZ TAB -->
   <div class="tab" id="tabBiz">
     <div class="sec">БИЗНЕСЫ</div>
     <div class="biz-grid" id="bizGrid"></div>
   </div>
 
-  <!-- TAB: UPGRADES -->
+  <!-- UPG TAB -->
   <div class="tab" id="tabUpg">
     <div class="sec">АПГРЕЙДЫ</div>
     <div class="upg-list" id="upgList"></div>
   </div>
 
+  <!-- QUEST TAB -->
+  <div class="tab" id="tabQuest">
+    <div class="sec">КВЕСТЫ</div>
+    <div class="quest-list" id="questList"></div>
+    <div class="sec">ДОСТИЖЕНИЯ</div>
+    <div class="ach-grid" id="achGrid"></div>
+  </div>
+
+  <!-- REF TAB -->
+  <div class="tab" id="tabRef">
+    <div class="sec">РЕФЕРАЛЬНАЯ СИСТЕМА</div>
+    <div class="ref-panel" id="refPanel"></div>
+    <div class="sec">ИСТОРИЯ РЕФЕРАЛОВ</div>
+    <div class="ref-history" id="refHistory"></div>
+  </div>
+
+  <!-- CHAR TAB -->
+  <div class="tab" id="tabChar">
+    <div class="sec">ХАРИЗМА</div>
+    <div class="charisma-panel" id="charPanel"></div>
+    <div class="sec">УРОВНИ ХАРИЗМЫ</div>
+    <div class="quest-list" id="charQuestList"></div>
+  </div>
+
 </div>
 
 <div class="nav">
-  <button class="nb on" onclick="goTab('City',this)"><span class="ni">🌆</span>ИМПЕРИЯ</button>
-  <button class="nb" onclick="goTab('Biz',this)"><span class="ni">🏪</span>БИЗНЕС</button>
-  <button class="nb" onclick="goTab('Upg',this)"><span class="ni">⚡</span>АПГРЕЙД</button>
+  <button class="nb on" data-tab="City" onclick="goTab('City',this)"><span class="ni">🌆</span>ГОРОД</button>
+  <button class="nb" data-tab="Biz" onclick="goTab('Biz',this)"><span class="ni">🏪</span>БИЗНЕС</button>
+  <button class="nb" data-tab="Upg" onclick="goTab('Upg',this)"><span class="ni">⚡</span>АПГРЕЙД</button>
+  <button class="nb" data-tab="Quest" onclick="goTab('Quest',this)"><span class="ni">📋</span>КВЕСТЫ<span class="nb-badge" id="questBadge" style="display:none">!</span></button>
+  <button class="nb" data-tab="Ref" onclick="goTab('Ref',this)"><span class="ni">👥</span>РЕФЕР<span class="nb-badge" id="refBadge" style="display:none">!</span></button>
+  <button class="nb" data-tab="Char" onclick="goTab('Char',this)"><span class="ni">✨</span>ХАР-МА</button>
 </div>
 
+<!-- OFFLINE MODAL -->
 <div class="modal-bg" id="offModal">
   <div class="modal">
     <h2>// OFFLINE_INCOME //</h2>
@@ -360,45 +315,230 @@ color:var(--cyan);background:rgba(0,255,249,.08);
   </div>
 </div>
 
+<!-- QUEST COMPLETE -->
+<div class="qpop" id="qpop">
+  <h3>// КВЕСТ ВЫПОЛНЕН //</h3>
+  <div class="qp-ico" id="qpIco">🏆</div>
+  <div class="qp-name" id="qpName">-</div>
+  <div class="qp-reward" id="qpReward">-</div>
+  <button class="mbtn" onclick="closeQPop()">[ ПРИНЯТЬ НАГРАДУ ]</button>
+</div>
+
+<!-- CHARISMA LVL UP -->
+<div class="char-popup" id="charPop">
+  <h3>// ХАРИЗМА РАСТЁТ //</h3>
+  <div class="cp-ico" id="cpIco">✨</div>
+  <div class="cp-name" id="cpName">-</div>
+  <div class="cp-desc" id="cpDesc">-</div>
+  <button class="mbtn" onclick="closeCharPop()">[ ПРИНЯТЬ ]</button>
+</div>
+
+<!-- REF TIER UNLOCK -->
+<div class="ref-popup" id="refPop">
+  <h3>// НОВЫЙ РЕФЕРАЛ-ТИРС //</h3>
+  <div class="rp-ico" id="rpIco">👥</div>
+  <div class="rp-name" id="rpName">-</div>
+  <div class="rp-bonus" id="rpBonus">-</div>
+  <button class="mbtn" onclick="closeRefPop()">[ ОТЛИЧНО ]</button>
+</div>
+
 <div class="notif" id="notif"></div>
 
 <script>
-/* ═══════════════ ДАННЫЕ ═══════════════ */
+/* ══════════════════════════════════════
+   ДАННЫЕ
+══════════════════════════════════════ */
+
+/*
+  ЭКОНОМИКА — БАЛАНС "1М за ~7 дней при хорошей игре"
+  День 1:  ~100–300 монет/день  (только тап, ларьки)
+  День 2:  ~500–2К монет/день
+  День 3:  ~3К–10К монет/день
+  День 4:  ~15К–40К монет/день
+  День 5:  ~60К–150К монет/день
+  День 6:  ~200К–400К монет/день
+  День 7:  ~500К–1М монет/день (если реферралы + все апгрейды)
+  Базовый тап = 1¢. CPS растёт медленно.
+  Стоимость бизнесов увеличена ~3-5x, CPS снижен ~2x, множитель роста цены 1.18 вместо 1.15
+*/
 const BIZES = [
-  {id:'kiosk',  name:'Кибер-ларёк',  icon:'🏪', base:10,    inc:0.1,  col:'#4a9090'},
-  {id:'bar',    name:'Неон-бар',      icon:'🍸', base:80,    inc:0.5,  col:'#00c8ff'},
-  {id:'club',   name:'Крипто-клуб',  icon:'🎰', base:320,   inc:2,    col:'#ff2d78'},
-  {id:'hack',   name:'Хакер-хаб',    icon:'💻', base:1300,  inc:8,    col:'#39ff14'},
-  {id:'corp',   name:'Корпорация',   icon:'🏢', base:5200,  inc:26,   col:'#00fff9'},
-  {id:'bank',   name:'Крипто-банк',  icon:'🏦', base:19000, inc:85,   col:'#f5e642'},
-  {id:'tower',  name:'Мегабашня',    icon:'🏙️', base:65000, inc:220,  col:'#b742f5'},
-  {id:'nexus',  name:'NEXUS CORP',   icon:'🤖', base:260000,inc:700,  col:'#ff2d78'},
+  {id:'kiosk', name:'Кибер-ларёк',  icon:'🏪', base:25,      inc:0.05,  col:'#4a9090', unlockQuest:'q_first_tap'},
+  {id:'bar',   name:'Неон-бар',     icon:'🍸', base:250,     inc:0.25,  col:'#00c8ff', unlockQuest:'q_earn_200'},
+  {id:'club',  name:'Крипто-клуб',  icon:'🎰', base:1200,    inc:1.0,   col:'#ff2d78', unlockQuest:'q_own_3_biz'},
+  {id:'hack',  name:'Хакер-хаб',    icon:'💻', base:6000,    inc:3.5,   col:'#39ff14', unlockQuest:'q_tap_100'},
+  {id:'corp',  name:'Корпорация',   icon:'🏢', base:28000,   inc:12,    col:'#00fff9', unlockQuest:'q_earn_20k'},
+  {id:'bank',  name:'Крипто-банк',  icon:'🏦', base:130000,  inc:40,    col:'#f5e642', unlockQuest:'q_reach_lvl6'},
+  {id:'tower', name:'Мегабашня',    icon:'🏙️', base:550000,  inc:110,   col:'#b742f5', unlockQuest:'q_total_250k'},
+  {id:'nexus', name:'NEXUS CORP',   icon:'🤖', base:2500000, inc:320,   col:'#ff2d78', unlockQuest:'q_own_all_biz'},
 ];
 
 const UPGS = [
-  {id:'u1',name:'Нейростимулятор', icon:'🧠',cost:50,    desc:'×2 к тапу',           type:'tap',   mult:2},
-{id:'u2',name:'Квант-бустер',    icon:'⚡',cost:500,   desc:'×2 к тапу',           type:'tap',   mult:2},
-  {id:'u3',name:'Кибер-вывеска',   icon:'📡',cost:150,   desc:'×2 к ларьку',         type:'biz',t:'kiosk',mult:2},
-  {id:'u4',name:'VIP-зона',        icon:'🍾',cost:900,   desc:'×2 к бару',           type:'biz',t:'bar',  mult:2},
-  {id:'u5',name:'Голо-реклама',    icon:'📣',cost:3200,  desc:'×2 к клубу',          type:'biz',t:'club', mult:2},
-  {id:'u6',name:'ИИ-менеджер',     icon:'🤖',cost:9500,  desc:'×2 к тапу',           type:'tap',   mult:2},
-  {id:'u7',name:'Нейро-сеть',      icon:'🔴',cost:22000, desc:'×2 к корпорации',     type:'biz',t:'corp', mult:2},
-  {id:'u8',name:'МАТРИЦА',         icon:'🌐',cost:90000, desc:'×1.5 ко всему',       type:'all',   mult:1.5},
+  {id:'u1', name:'Нейростимулятор', icon:'🧠', cost:80,     desc:'×2 к тапу',           type:'tap',  mult:2,   unlockQuest:'q_tap_20'},
+  {id:'u2', name:'Квант-бустер',    icon:'⚡', cost:1200,   desc:'×2 к тапу',           type:'tap',  mult:2,   unlockQuest:'q_tap_200'},
+  {id:'u3', name:'Кибер-вывеска',   icon:'📡', cost:400,    desc:'×2 к ларьку',         type:'biz',t:'kiosk',mult:2, unlockQuest:'q_kiosk_5'},
+  {id:'u4', name:'VIP-зона',        icon:'🍾', cost:3500,   desc:'×2 к бару',           type:'biz',t:'bar',  mult:2, unlockQuest:'q_bar_5'},
+  {id:'u5', name:'Голо-реклама',    icon:'📣', cost:18000,  desc:'×2 к клубу',          type:'biz',t:'club', mult:2, unlockQuest:'q_club_5'},
+  {id:'u6', name:'ИИ-менеджер',     icon:'🤖', cost:75000,  desc:'×2 к тапу',           type:'tap',  mult:2,   unlockQuest:'q_reach_lvl8'},
+  {id:'u7', name:'Нейро-сеть',      icon:'🔴', cost:200000, desc:'×2 к корпорации',     type:'biz',t:'corp', mult:2, unlockQuest:'q_corp_3'},
+  {id:'u8', name:'МАТРИЦА',         icon:'🌐', cost:800000, desc:'×1.5 ко всему',       type:'all',  mult:1.5, unlockQuest:'q_total_500k'},
+  {id:'u9', name:'Темпо-генератор', icon:'⏱️', cost:20000,  desc:'+0.3¢ авт./100мс',    type:'auto', bonus:0.3,unlockQuest:'q_combo_x10'},
+  {id:'u10',name:'Нано-клон',       icon:'🔬', cost:90000,  desc:'×1.5 к тапу',         type:'tap',  mult:1.5, unlockQuest:'q_streak_5'},
+  {id:'u11',name:'Хакер-протокол',  icon:'🛡️', cost:400000, desc:'×3 к хакер-хабу',     type:'biz',t:'hack', mult:3, unlockQuest:'q_hack_10'},
+  {id:'u12',name:'NEXUS LINK',      icon:'🔗', cost:1500000,desc:'×2 ко всему',         type:'all',  mult:2,   unlockQuest:'q_nexus_1'},
 ];
 
-const XP_TABLE=[0,100,300,700,1500,3000,6000,12000,25000,50000,100000];
+/* КВЕСТЫ */
+const QUESTS = [
+  // Разблокировки бизнесов
+  {id:'q_first_tap', name:'Первый шаг',      icon:'👆', desc:'Сделай 1 тап',              cat:'main', goal:1,      type:'taps',     reward:{coins:0,    xp:5,   unlock:'kiosk'}},
+  {id:'q_earn_200',  name:'Первые деньги',   icon:'💵', desc:'Заработай 200 монет',        cat:'main', goal:200,    type:'total',    reward:{coins:0,    xp:10,  unlock:'bar'}},
+  {id:'q_own_3_biz', name:'Малый бизнес',    icon:'🏪', desc:'Купи 3 разных бизнеса',      cat:'main', goal:3,      type:'biz_types',reward:{coins:0,    xp:15,  unlock:'club'}},
+  {id:'q_tap_100',   name:'Сто тапов',       icon:'🔥', desc:'Сделай 100 тапов',           cat:'main', goal:100,    type:'taps',     reward:{coins:150,  xp:20,  unlock:'hack'}},
+  {id:'q_earn_20k',  name:'Крупный игрок',   icon:'💰', desc:'Заработай 20 000 монет',     cat:'main', goal:20000,  type:'total',    reward:{coins:2000, xp:30,  unlock:'corp'}},
+  {id:'q_reach_lvl6',name:'Шестой уровень',  icon:'⭐', desc:'Достигни 6 уровня',          cat:'main', goal:6,      type:'level',    reward:{coins:5000, xp:50,  unlock:'bank'}},
+  {id:'q_total_250k',name:'Четверть миллиона',icon:'🏆',desc:'Заработай 250 000 монет',    cat:'main', goal:250000, type:'total',    reward:{coins:25000,xp:80,  unlock:'tower'}},
+  {id:'q_own_all_biz',name:'Империя',        icon:'🌆', desc:'Купи все 7 типов бизнесов',  cat:'main', goal:7,      type:'biz_types',reward:{coins:50000,xp:100, unlock:'nexus'}},
+  // Разблокировки апгрейдов
+  {id:'q_tap_20',    name:'Первые двадцать', icon:'🖐️', desc:'Сделай 20 тапов',            cat:'main', goal:20,     type:'taps',     reward:{coins:30,   xp:10,  unlock:'u1'}},
+  {id:'q_tap_200',   name:'Скоростной режим',icon:'⚡', desc:'Сделай 200 тапов',           cat:'main', goal:200,    type:'taps',     reward:{coins:500,  xp:20,  unlock:'u2'}},
+  {id:'q_kiosk_5',   name:'Сеть ларьков',   icon:'🏪', desc:'Купи 5 Кибер-ларьков',       cat:'main', goal:5,      type:'biz_count',biz:'kiosk', reward:{coins:200,  xp:20,  unlock:'u3'}},
+  {id:'q_bar_5',     name:'Барная сеть',     icon:'🍸', desc:'Купи 5 Неон-баров',          cat:'main', goal:5,      type:'biz_count',biz:'bar',   reward:{coins:1500, xp:25,  unlock:'u4'}},
+  {id:'q_club_5',    name:'Клубная сеть',    icon:'🎰', desc:'Купи 5 Крипто-клубов',       cat:'main', goal:5,      type:'biz_count',biz:'club',  reward:{coins:8000, xp:30,  unlock:'u5'}},
+  {id:'q_reach_lvl8',name:'Ветеран',         icon:'🎖️', desc:'Достигни 8 уровня',          cat:'main', goal:8,      type:'level',    reward:{coins:20000,xp:60,  unlock:'u6'}},
+  {id:'q_corp_3',    name:'Корп. мир',       icon:'🏢', desc:'Купи 3 Корпорации',          cat:'main', goal:3,      type:'biz_count',biz:'corp',  reward:{coins:30000,xp:50,  unlock:'u7'}},
+  {id:'q_total_500k',name:'Полумиллионер',   icon:'💎', desc:'Заработай 500 000 монет',    cat:'main', goal:500000, type:'total',    reward:{coins:50000,xp:100, unlock:'u8'}},
+  {id:'q_combo_x10', name:'Комбо-мастер',    icon:'🌀', desc:'Набери комбо x10',           cat:'main', goal:10,     type:'max_combo',reward:{coins:1000, xp:30,  unlock:'u9'}},
+  {id:'q_streak_5',  name:'Пять дней подряд',icon:'📅', desc:'5 дней подряд',              cat:'main', goal:5,      type:'streak',   reward:{coins:8000, xp:50,  unlock:'u10'}},
+  {id:'q_hack_10',   name:'Хакер-элита',     icon:'💻', desc:'Купи 10 Хакер-хабов',       cat:'main', goal:10,     type:'biz_count',biz:'hack',  reward:{coins:60000,xp:70,  unlock:'u11'}},
+  {id:'q_nexus_1',   name:'Нексус активен',  icon:'🤖', desc:'Купи NEXUS CORP',            cat:'main', goal:1,      type:'biz_count',biz:'nexus', reward:{coins:200000,xp:150,unlock:'u12'}},
+  // СЛОЖНЫЕ
+  {id:'q_tap_1000',  name:'Машина тапов',    icon:'👊', desc:'Сделай 1 000 тапов',        cat:'hard', goal:1000,   type:'taps',     reward:{coins:5000, xp:60,  achId:'ach_tapper'}},
+  {id:'q_tap_5000',  name:'Кибер-маньяк',    icon:'🤘', desc:'Сделай 5 000 тапов',        cat:'hard', goal:5000,   type:'taps',     reward:{coins:40000,xp:150, achId:'ach_maniac'}},
+  {id:'q_cps_5',     name:'Первый поток',    icon:'💤', desc:'Достигни 5 монет/сек',       cat:'hard', goal:5,      type:'cps',      reward:{coins:3000, xp:40,  achId:'ach_passive'}},
+  {id:'q_cps_50',    name:'Поток монет',     icon:'🌊', desc:'Достигни 50 монет/сек',      cat:'hard', goal:50,     type:'cps',      reward:{coins:50000,xp:100, achId:'ach_flow'}},
+  {id:'q_streak_3',  name:'Верный игрок',    icon:'🔥', desc:'3 дня подряд входа',         cat:'hard', goal:3,      type:'streak',   reward:{coins:1500, xp:30,  charXp:20}},
+  {id:'q_streak_14', name:'Две недели',      icon:'🏅', desc:'14 дней подряд',             cat:'hard', goal:14,     type:'streak',   reward:{coins:100000,xp:120,achId:'ach_streak',charXp:60}},
+  {id:'q_total_1m',  name:'Первый миллион',  icon:'💸', desc:'Заработай 1 000 000 монет',  cat:'hard', goal:1000000,type:'total',    reward:{coins:100000,xp:300,achId:'ach_million'}},
+  {id:'q_all_upg',   name:'Полная прокачка', icon:'🔧', desc:'Купи все 12 апгрейдов',      cat:'hard', goal:12,     type:'upg_count',reward:{coins:200000,xp:200,achId:'ach_maxed',charXp:100}},
+  {id:'q_lvl10',     name:'Легенда',         icon:'👑', desc:'Достигни 10 уровня',         cat:'hard', goal:10,     type:'level',    reward:{coins:200000,xp:200,achId:'ach_legend',charXp:80}},
+  {id:'q_ref5',      name:'Вербовщик',       icon:'👥', desc:'Пригласи 5 друзей',          cat:'hard', goal:5,      type:'refs',     reward:{coins:10000, xp:50,  achId:'ach_recruiter', charXp:30}},
+  {id:'q_ref25',     name:'Агент влияния',   icon:'🕵️', desc:'Пригласи 25 друзей',         cat:'hard', goal:25,     type:'refs',     reward:{coins:100000,xp:150, achId:'ach_agent', charXp:80}},
+];
 
-/* ═══════════════ СОСТОЯНИЕ ═══════════════ */
-let G={coins:0,total:0,xp:0,lvl:1,lastSave:Date.now(),biz:{},upg:{},combo:0,comboT:null};
+const ACHIEVEMENTS = [
+  {id:'ach_tapper',    name:'Тапер',       icon:'👆', desc:'1000 тапов',    bonus:'+5% тап'},
+  {id:'ach_maniac',    name:'Маньяк',      icon:'🤘', desc:'5000 тапов',    bonus:'+10% тап'},
+  {id:'ach_passive',   name:'Пассивный',   icon:'💤', desc:'5¢/сек',        bonus:'+5% CPS'},
+  {id:'ach_flow',      name:'Поток',       icon:'🌊', desc:'50¢/сек',       bonus:'+10% CPS'},
+  {id:'ach_streak',    name:'Верность',    icon:'🏅', desc:'14 дней',       bonus:'×1.2 бонус'},
+  {id:'ach_million',   name:'Миллионер',   icon:'💸', desc:'1M монет',      bonus:'×1.1 всего'},
+  {id:'ach_maxed',     name:'Макс',        icon:'🔧', desc:'Все апгрейды',  bonus:'×1.3 всего'},
+  {id:'ach_legend',    name:'Легенда',     icon:'👑', desc:'LVL 10',        bonus:'+20% всего'},
+  {id:'ach_recruiter', name:'Вербовщик',   icon:'👥', desc:'5 рефералов',   bonus:'+1% рефбонус'},
+  {id:'ach_agent',     name:'Агент',       icon:'🕵️', desc:'25 рефералов',  bonus:'+2% рефбонус'},
+];
 
-/* ═══════════════ СОХРАНЕНИЕ ═══════════════ */
-function save(){G.lastSave=Date.now();localStorage.setItem('neon_empire_v1',JSON.stringify(G))}
+/*  РЕФЕРАЛЬНЫЕ ТИРСЫ
+    Процент от дохода реферала — очень маленький чтобы не накрутить.
+    Накопление происходит только от CPS рефералов (симулированное — ~10% их прогресса).
+    На деле в реальном боте нужен backend; здесь симуляция для демо. */
+const REF_TIERS = [
+  {id:'r0', name:'Новичок',       icon:'🌱', req:0,  pct:0.5,  cpsBonus:0,    desc:'0.5% от дохода друзей'},
+  {id:'r1', name:'Вербовщик',     icon:'📣', req:1,  pct:1.0,  cpsBonus:0.02, desc:'1% + +2% к своему CPS'},
+  {id:'r2', name:'Коннектор',     icon:'🔗', req:3,  pct:1.5,  cpsBonus:0.05, desc:'1.5% + +5% к своему CPS'},
+  {id:'r3', name:'Агент',         icon:'🕵️', req:7,  pct:2.0,  cpsBonus:0.10, desc:'2% + +10% к своему CPS'},
+  {id:'r4', name:'Влиятельный',   icon:'🌟', req:15, pct:2.5,  cpsBonus:0.15, desc:'2.5% + +15% к CPS'},
+  {id:'r5', name:'Магнат сети',   icon:'🏆', req:30, pct:3.0,  cpsBonus:0.25, desc:'3% + +25% к CPS'},
+  {id:'r6', name:'НЕКСУС-АГЕНТ',  icon:'🤖', req:50, pct:4.0,  cpsBonus:0.40, desc:'4% + +40% к CPS'},
+];
+
+const CHARISMA_LEVELS = [
+  {lvl:1,  name:'Новичок',         icon:'😐', desc:'Только начинаешь',      xpReq:0,    perk:'Базовый тап',             tapBonus:1,   cpsBonus:1},
+  {lvl:2,  name:'Торговец',        icon:'🧢', desc:'Тебя заметили',         xpReq:50,   perk:'+10% к монетам/тап',      tapBonus:1.1, cpsBonus:1},
+  {lvl:3,  name:'Предприниматель', icon:'💼', desc:'Бизнес идёт в гору',    xpReq:120,  perk:'+15% к CPS',              tapBonus:1.1, cpsBonus:1.15},
+  {lvl:4,  name:'Менеджер',        icon:'📊', desc:'Команда уважает',       xpReq:230,  perk:'×1.2 тап+CPS',            tapBonus:1.2, cpsBonus:1.2},
+  {lvl:5,  name:'Топ-менеджер',    icon:'🎩', desc:'Конкуренты боятся',     xpReq:400,  perk:'+20% offline доход',      tapBonus:1.2, cpsBonus:1.2, offlineBonus:1.2},
+  {lvl:6,  name:'Магнат',          icon:'💎', desc:'Ты контролируешь рынок',xpReq:650,  perk:'×1.5 к тапу',             tapBonus:1.5, cpsBonus:1.2},
+  {lvl:7,  name:'Олигарх',         icon:'🏰', desc:'Деньги работают сами',  xpReq:1000, perk:'+30% к CPS',              tapBonus:1.5, cpsBonus:1.5},
+  {lvl:8,  name:'Технократ',       icon:'🤖', desc:'Технологии под контролем',xpReq:1500,perk:'Двойное комбо',          tapBonus:1.5, cpsBonus:1.5, doubleCombo:true},
+  {lvl:9,  name:'Архитектор',      icon:'🌆', desc:'Ты строишь будущее',    xpReq:2200, perk:'×2 тап+CPS',              tapBonus:2,   cpsBonus:2},
+  {lvl:10, name:'НЕО-ИМПЕРАТОР',   icon:'👑', desc:'Ты — легенда Нео-сити', xpReq:3200, perk:'×3 ко всему навсегда',    tapBonus:3,   cpsBonus:3},
+];
+
+const CHAR_QUESTS = [
+  {fromLvl:1, toLvl:2,  name:'Первые деньги',     icon:'💵', desc:'Заработай 500 монет',       type:'total',    goal:500},
+  {fromLvl:2, toLvl:3,  name:'Деловые связи',      icon:'🤝', desc:'Купи 5 разных бизнесов',    type:'biz_types',goal:5},
+  {fromLvl:3, toLvl:4,  name:'Командная игра',     icon:'👥', desc:'Достигни 3 уровня',         type:'level',    goal:3},
+  {fromLvl:4, toLvl:5,  name:'Марафон тапов',      icon:'🏃', desc:'Сделай 400 тапов',          type:'taps',     goal:400},
+  {fromLvl:5, toLvl:6,  name:'Серьёзный бизнес',   icon:'🏢', desc:'Заработай 50 000 монет',    type:'total',    goal:50000},
+  {fromLvl:6, toLvl:7,  name:'Денежный поток',     icon:'💸', desc:'Достигни 10 монет/сек',     type:'cps',      goal:10},
+  {fromLvl:7, toLvl:8,  name:'Верность делу',      icon:'📅', desc:'5 дней подряд входа',       type:'streak',   goal:5},
+  {fromLvl:8, toLvl:9,  name:'Элита',              icon:'⭐', desc:'Достигни 7 уровня',         type:'level',    goal:7},
+  {fromLvl:9, toLvl:10, name:'Полная власть',       icon:'👑', desc:'Заработай 750 000 монет',   type:'total',    goal:750000},
+];
+
+const XP_TABLE=[0,150,400,900,2000,4500,9000,18000,38000,75000,150000];
+
+/* ══════════════════════════════════════
+   СОСТОЯНИЕ
+══════════════════════════════════════ */
+let G={
+  coins:0, total:0, xp:0, lvl:1,
+  lastSave:Date.now(),
+  biz:{}, upg:{},
+  combo:0, comboT:null,
+  taps:0, maxCombo:0,
+  questDone:{}, achUnlocked:{},
+  charLvl:1, charXp:0,
+  dailyDay:0, dailyStreak:0,
+  // Реферальная система
+  refCount:0,            // кол-во приглашённых (симуляция — вводится вручную или из бота)
+  refTotalEarned:0,      // всего монет получено от рефералов
+  refHistory:[],         // [{name,earned,ts}] последние записи
+  refTier:0,             // текущий тир (индекс REF_TIERS)
+  refPendingCoins:0,     // накопленные монеты от рефов ещё не собранные
+};
+
+/* ══════════════════════════════════════
+   ANTI-CHEAT DAILY (UTC timestamp)
+══════════════════════════════════════ */
+function getTodayKey(){ return Math.floor(Date.now()/86400000); }
+function canClaimDaily(){ return G.dailyDay !== getTodayKey(); }
+
+function claimDaily(){
+  if(!canClaimDaily()) return;
+  const today=getTodayKey();
+  if(G.dailyDay===today-1){ G.dailyStreak=(G.dailyStreak||0)+1; }
+  else { G.dailyStreak=1; }
+  G.dailyDay=today;
+  const s=G.dailyStreak;
+  const base=80;
+  const bonus=Math.floor(base*Math.pow(1.6,Math.min(s-1,13)));
+  G.coins+=bonus; G.total+=bonus;
+  addXP(15*s); addCharXp(5*Math.min(s,7));
+  notify('🎁 БОНУС: +'+fmt(bonus)+'¢  СЕРИЯ: '+s,'ok');
+  checkQuests(); save(); redraw(); updateDailyBtn();
+}
+function updateDailyBtn(){
+  const btn=document.getElementById('dailyBtn');
+  const txt=document.getElementById('dailyTxt');
+  document.getElementById('dailyStreak').textContent='СЕРИЯ: '+(G.dailyStreak||0);
+  if(!canClaimDaily()){ btn.classList.add('claimed'); txt.textContent='✓ БОНУС ПОЛУЧЕН'; }
+  else { btn.classList.remove('claimed'); txt.textContent='ЕЖЕДНЕВНЫЙ БОНУС'; }
+}
+
+/* ══════════════════════════════════════
+   СОХРАНЕНИЕ
+══════════════════════════════════════ */
+function save(){ G.lastSave=Date.now(); localStorage.setItem('ne_v3',JSON.stringify(G)); }
 function load(){
-  try{const d=localStorage.getItem('neon_empire_v1');if(d)Object.assign(G,JSON.parse(d))}catch(e){}
+  try{ const d=localStorage.getItem('ne_v3'); if(d) Object.assign(G,JSON.parse(d)); }catch(e){}
   const elapsed=(Date.now()-(G.lastSave||Date.now()))/1000;
   const cps=getCPS();
-  if(elapsed>60&&cps>0){
-    const earned=Math.floor(cps*Math.min(elapsed,28800));
+  if(elapsed>120&&cps>0){
+    const cd=CHARISMA_LEVELS[(G.charLvl||1)-1];
+    const offBonus=cd.offlineBonus||1;
+    const earned=Math.floor(cps*Math.min(elapsed,28800)*offBonus);
     if(earned>0){
       document.getElementById('offAmt').textContent=fmt(earned)+' ¢';
       document.getElementById('offModal').classList.add('show');
@@ -408,62 +548,256 @@ function load(){
   G.lastSave=Date.now();
 }
 function collectOff(){
-  G.coins+=(window._off⠟⠞⠟⠟⠵⠞⠺⠞⠵⠵⠵⠺⠞⠵⠞⠞⠟⠵⠟⠞⠵⠺⠵⠺0);
+  G.coins+=(window._off||0); G.total+=(window._off||0);
   document.getElementById('offModal').classList.remove('show');
   notify('💰 СОБРАНО: '+fmt(window._off||0)+'¢','ok');
-  save();redraw();
+  save(); redraw();
 }
 
-/* ═══════════════ РАСЧЁТЫ ═══════════════ */
+/* ══════════════════════════════════════
+   РЕФЕРАЛЬНАЯ СИСТЕМА
+══════════════════════════════════════ */
+function getCurrentRefTier(){
+  let t=0;
+  for(let i=REF_TIERS.length-1;i>=0;i--){
+    if(G.refCount>=REF_TIERS[i].req){ t=i; break; }
+  }
+  return t;
+}
+function getRefPct(){ return REF_TIERS[getCurrentRefTier()].pct/100; }
+function getRefCpsBonus(){ return REF_TIERS[getCurrentRefTier()].cpsBonus; }
+
+// Симуляция: каждый реферал генерирует ~3¢/сек в среднем,
+// мы получаем refPct% от этого. Вызывается в game loop.
+function tickRefIncome(){
+  if(!G.refCount) return;
+  const refSimCPS=3; // симулированный CPS одного реферала
+  const pct=getRefPct();
+  const income=G.refCount*refSimCPS*pct/10; // /10 т.к. вызывается каждые 100мс
+  G.refPendingCoins=(G.refPendingCoins||0)+income;
+}
+
+function collectRefCoins(){
+  const amt=Math.floor(G.refPendingCoins||0);
+  if(amt<1){ notify('// НЕТ МОНЕТ ОТ РЕФЕРАЛОВ //','err'); return; }
+  G.coins+=amt; G.total+=amt; G.refTotalEarned=(G.refTotalEarned||0)+amt;
+  G.refPendingCoins=0;
+  notify('👥 РЕФЕРАЛ-ДОХОД: +'+fmt(amt)+'¢','ref');
+  checkQuests(); save(); redraw();
+}
+
+// Вызывается когда приглашённый игрок регистрируется (в боте — webhook).
+// Здесь — демо-кнопка "Симулировать реферала".
+function addReferral(name){
+  G.refCount=(G.refCount||0)+1;
+  const prevTier=G.refTier||0;
+  const newTier=getCurrentRefTier();
+  if(newTier>prevTier){
+    G.refTier=newTier;
+    showRefTierPop(newTier);
+  } else {
+    notify('👥 НОВЫЙ РЕФЕРАЛ: '+name,'ref');
+  }
+  // Запись в историю
+  G.refHistory=G.refHistory||[];
+  G.refHistory.unshift({name:name, earned:0, ts:Date.now()});
+  if(G.refHistory.length>20) G.refHistory.pop();
+  checkQuests(); save(); redraw(); renderRef();
+}
+
+function getReferralLink(){
+  const uid=window.Telegram?.WebApp?.initDataUnsafe?.user?.id || 'demo';
+  return 'https://t.me/NeonEmpireBot?start=ref_'+uid;
+}
+function shareReferral(){
+  const link=getReferralLink();
+  const text='🌆 Строй свою Неон-Империю! Присоединяйся и получи бонус: '+link;
+  if(window.Telegram?.WebApp?.openTelegramLink){
+    window.Telegram.WebApp.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent('🌆 Строй свою Неон-Империю!'));
+  } else {
+    navigator.clipboard?.writeText(link).then(()=>notify('📋 ССЫЛКА СКОПИРОВАНА','inf'));
+  }
+}
+function copyRefLink(){
+  const link=getReferralLink();
+  navigator.clipboard?.writeText(link).then(()=>notify('📋 ССЫЛКА СКОПИРОВАНА','inf'))
+    .catch(()=>notify(link.substring(0,40)+'...','inf'));
+}
+
+function showRefTierPop(tierIdx){
+  const t=REF_TIERS[tierIdx];
+  document.getElementById('rpIco').textContent=t.icon;
+  document.getElementById('rpName').textContent=t.name+' ('+t.req+'+ рефералов)';
+  document.getElementById('rpBonus').textContent=t.desc;
+  document.getElementById('refPop').classList.add('show');
+}
+function closeRefPop(){ document.getElementById('refPop').classList.remove('show'); }
+
+function renderRef(){
+  const panel=document.getElementById('refPanel');
+  const tierIdx=getCurrentRefTier();
+  const tier=REF_TIERS[tierIdx];
+  const nextTier=REF_TIERS[tierIdx+1]||null;
+  const pending=Math.floor(G.refPendingCoins||0);
+
+  let tiersHtml='';
+  REF_TIERS.forEach((t,i)=>{
+    const active=i===tierIdx;
+    const unlocked=i<=tierIdx;
+    tiersHtml+=`<div class="ref-tier${active?' active':''}">
+      <div>
+        <div class="ref-tier-name">${t.icon} ${t.name}</div>
+        <div class="ref-tier-req">${t.req===0?'Начальный':t.req+' рефералов'}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="ref-tier-bonus">${t.pct}%</div>
+        <div class="ref-tier-lock">${unlocked?'✅ АКТИВЕН':'🔒 '+t.req+' реф.'}</div>
+      </div>
+    </div>`;
+  });
+
+  panel.innerHTML=`
+    <div class="ref-title">👥 РЕФЕРАЛЬНАЯ ПРОГРАММА</div>
+    <div class="ref-sub">Приглашай друзей — получай % от их дохода навсегда</div>
+    <div class="ref-stats">
+      <div class="ref-stat"><div class="ref-stat-val">${G.refCount||0}</div><div class="ref-stat-lbl">РЕФЕРАЛОВ</div></div>
+      <div class="ref-stat"><div class="ref-stat-val">${tier.pct}%</div><div class="ref-stat-lbl">ПРОЦЕНТ</div></div>
+      <div class="ref-stat"><div class="ref-stat-val">${fmt(G.refTotalEarned||0)}</div><div class="ref-stat-lbl">ЗАРАБОТАНО</div></div>
+    </div>
+    ${pending>0?`<div style="background:rgba(255,140,0,.1);border:1px solid rgba(255,140,0,.3);border-radius:4px;padding:9px 12px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--orange)">💰 Ожидает сбора: <b>${fmt(pending)}¢</b></span>
+      <button onclick="collectRefCoins()" style="font-family:'Orbitron',sans-serif;font-size:9px;background:var(--orange);color:#000;border:none;padding:5px 10px;border-radius:3px;cursor:pointer;font-weight:700;">ЗАБРАТЬ</button>
+    </div>`:''}
+    <div class="sec" style="margin-bottom:6px">ТИРСЫ</div>
+    <div class="ref-tiers" style="margin-bottom:10px">${tiersHtml}</div>
+    <div class="sec" style="margin-bottom:6px">ПРИГЛАСИТЬ</div>
+    <button class="ref-btn" onclick="shareReferral()">📤 ПОДЕЛИТЬСЯ В TELEGRAM</button>
+    <div class="ref-link-row">
+      <span class="ref-link-txt">${getReferralLink()}</span>
+      <button class="ref-copy-btn" onclick="copyRefLink()">КОПИРОВАТЬ</button>
+    </div>
+    <div style="margin-top:10px;margin-bottom:6px">
+      <div class="sec" style="margin-bottom:5px;font-size:8px">ДЕМО: СИМУЛИРОВАТЬ РЕФЕРАЛА</div>
+      <button onclick="addReferral('Игрок_'+Math.floor(Math.random()*9999))" style="width:100%;padding:8px;border:1px dashed rgba(255,140,0,.4);background:rgba(255,140,0,.05);border-radius:4px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--orange);cursor:pointer;">+ ДОБАВИТЬ ТЕСТОВОГО РЕФЕРАЛА</button>
+    </div>
+  `;
+
+  // История
+  const hist=document.getElementById('refHistory');
+  hist.innerHTML='';
+  if(!G.refHistory||!G.refHistory.length){
+    hist.innerHTML='<div style="font-family:Share Tech Mono,monospace;font-size:9px;color:var(--muted);padding:10px;text-align:center">// ПОКА НЕТ РЕФЕРАЛОВ //</div>';
+    return;
+  }
+  G.refHistory.forEach(r=>{
+    const el=document.createElement('div');
+    el.className='ref-entry';
+    const ago=Math.floor((Date.now()-r.ts)/60000);
+    el.innerHTML=`<span class="ref-entry-name">👤 ${r.name}</span><span class="ref-entry-earned">${ago<60?ago+'мин назад':Math.floor(ago/60)+'ч назад'}</span>`;
+    hist.appendChild(el);
+  });
+}
+
+function updateRefBadge(){
+  const b=document.getElementById('refBadge');
+  b.style.display=(G.refPendingCoins||0)>=10?'block':'none';
+}
+
+/* ══════════════════════════════════════
+   ХАРИЗМА
+══════════════════════════════════════ */
+function addCharXp(v){
+  G.charXp=(G.charXp||0)+v;
+  while(G.charLvl<CHARISMA_LEVELS.length){
+    const next=CHARISMA_LEVELS[G.charLvl];
+    if(!next||G.charXp<next.xpReq) break;
+    G.charLvl++;
+    showCharLvlPop(G.charLvl);
+  }
+}
+function showCharLvlPop(lvl){
+  const d=CHARISMA_LEVELS[lvl-1];
+  document.getElementById('cpIco').textContent=d.icon;
+  document.getElementById('cpName').textContent=d.name+' (ХАР. '+lvl+')';
+  document.getElementById('cpDesc').textContent=d.perk;
+  document.getElementById('charPop').classList.add('show');
+}
+function closeCharPop(){ document.getElementById('charPop').classList.remove('show'); }
+function getCharBonus(){ return CHARISMA_LEVELS[(G.charLvl||1)-1]; }
+
+/* ══════════════════════════════════════
+   РАСЧЁТЫ
+══════════════════════════════════════ */
 function getCPS(){
-  let gm=1;
-  UPGS.forEach(u=>{if(G.upg[u.id]&&u.type==='all')gm*=u.mult});
+  const char=getCharBonus();
+  let gm=(char.cpsBonus||1)*(1+getRefCpsBonus());
+  UPGS.forEach(u=>{ if(G.upg[u.id]&&u.type==='all') gm*=u.mult; });
+  if(G.achUnlocked['ach_passive']) gm*=1.05;
+  if(G.achUnlocked['ach_flow'])    gm*=1.10;
+  if(G.achUnlocked['ach_million']) gm*=1.10;
+  if(G.achUnlocked['ach_maxed'])   gm*=1.30;
+  if(G.achUnlocked['ach_legend'])  gm*=1.20;
   let t=0;
   BIZES.forEach(b=>{
-    const n=G.biz[b.id]||0;if(!n)return;
+    const n=G.biz[b.id]||0; if(!n) return;
     let m=1;
-    UPGS.forEach(u=>{if(G.upg[u.id]&&u.type==='biz'&&u.t===b.id)m*=u.mult});
+    UPGS.forEach(u=>{ if(G.upg[u.id]&&u.type==='biz'&&u.t===b.id) m*=u.mult; });
     t+=b.inc*n*m;
   });
-  return t*gm;
+  let autoBonus=0;
+  UPGS.forEach(u=>{ if(G.upg[u.id]&&u.type==='auto') autoBonus+=u.bonus||0; });
+  return t*gm+autoBonus;
 }
 function getTap(){
-  let p=1,gm=1;
+  const char=getCharBonus();
+  let p=char.tapBonus||1, gm=1;
   UPGS.forEach(u=>{
-    if(!G.upg[u.id])return;
-    if(u.type==='tap')p*=u.mult;
-    if(u.type==='all')gm*=u.mult;
+    if(!G.upg[u.id]) return;
+    if(u.type==='tap') p*=u.mult;
+    if(u.type==='all') gm*=u.mult;
   });
-  return p*gm*Math.max(1,G.combo);
+  if(G.achUnlocked['ach_tapper'])  gm*=1.05;
+  if(G.achUnlocked['ach_maniac'])  gm*=1.10;
+  if(G.achUnlocked['ach_million']) gm*=1.10;
+  if(G.achUnlocked['ach_maxed'])   gm*=1.30;
+  if(G.achUnlocked['ach_legend'])  gm*=1.20;
+  const comboVal=char.doubleCombo?Math.max(1,G.combo*2):Math.max(1,G.combo);
+  return p*gm*comboVal;
 }
-function bizCost(b){return Math.floor(b.base*Math.pow(1.15,G.biz[b.id]||0))}
+function bizCost(b){ return Math.floor(b.base*Math.pow(1.18,G.biz[b.id]||0)); }
 function fmt(n){
-  if(n>=1e12)return(n/1e12).toFixed(1)+'T';
-  if(n>=1e9) return(n/1e9).toFixed(1)+'B';
-  if(n>=1e6) return(n/1e6).toFixed(1)+'M';
-  if(n>=1e3) return(n/1e3).toFixed(1)+'K';
+  if(n>=1e12) return(n/1e12).toFixed(2)+'T';
+  if(n>=1e9)  return(n/1e9).toFixed(2)+'B';
+  if(n>=1e6)  return(n/1e6).toFixed(2)+'M';
+  if(n>=1e3)  return(n/1e3).toFixed(1)+'K';
   return Math.floor(n)+'';
 }
 
-/* ═══════════════ ТАП ═══════════════ */
+/* ══════════════════════════════════════
+   ТАП
+══════════════════════════════════════ */
 document.getElementById('cityWrap').addEventListener('click',function(e){
   const tp=getTap();
-  G.coins+=tp;G.total+=tp;addXP(1);addCombo();
+  G.coins+=tp; G.total+=tp; G.taps=(G.taps||0)+1;
+  addXP(1); addCombo(); addCharXp(0.15);
   const pop=document.createElement('div');
-  pop.className='cpop';pop.textContent='+'+fmt(tp)+'¢';
+  pop.className='cpop'; pop.textContent='+'+fmt(tp)+'¢';
   const r=this.getBoundingClientRect();
   pop.style.left=(e.clientX-r.left-18)+'px';
   pop.style.top=(e.clientY-r.top-18)+'px';
-  this.appendChild(pop);setTimeout(()=>pop.remove(),900);
-  if(G.total>0)document.getElementById('tapHint').style.opacity='0';
-  redraw();
+  this.appendChild(pop); setTimeout(()=>pop.remove(),900);
+  if(G.total>0) document.getElementById('tapHint').style.opacity='0';
+  checkQuests(); redraw();
 });
 
-/* ═══════════════ КОМБО ═══════════════ */
+/* ══════════════════════════════════════
+   КОМБО
+══════════════════════════════════════ */
 function addCombo(){
   G.combo=Math.min((G.combo||0)+1,20);
+  if(G.combo>G.maxCombo) G.maxCombo=G.combo;
   clearTimeout(G.comboT);
-  G.comboT=setTimeout(()=>{G.combo=0;updateCombo()},2000);
+  G.comboT=setTimeout(()=>{ G.combo=0; updateCombo(); },2000);
   updateCombo();
 }
 function updateCombo(){
@@ -471,192 +805,360 @@ function updateCombo(){
   document.getElementById('cVal').textContent='x'+(G.combo||1);
 }
 
-/* ═══════════════ XP / УРОВЕНЬ ═══════════════ */
+/* ══════════════════════════════════════
+   XP / УРОВЕНЬ
+══════════════════════════════════════ */
 function addXP(v){
   G.xp+=v;
   const need=XP_TABLE[G.lvl]||1e9;
   if(G.xp>=need&&G.lvl<XP_TABLE.length){
-    G.lvl++;notify('🎉  LEVEL UP → '+G.lvl,'inf');cityPulse();
+    G.lvl++; notify('🎉  LEVEL UP → '+G.lvl,'inf'); cityPulse(); checkQuests();
   }
 }
 
-/* ═══════════════ ПОКУПКИ ═══════════════ */
+/* ══════════════════════════════════════
+   ПОКУПКИ
+══════════════════════════════════════ */
 function buyBiz(b){
+  if(!isBizUnlocked(b.id)){ notify('🔒 ВЫПОЛНИ КВЕСТ','err'); return; }
   const c=bizCost(b);
-  if(G.coins<c){notify('// НЕДОСТАТОЧНО МОНЕТ //','err');return}
-  G.coins-=c;G.biz[b.id]=(G.biz[b.id]||0)+1;
-  addXP(10);notify('✅ '+b.name+' ОТКРЫТ','ok');
-  save();redraw();drawCity();
+  if(G.coins<c){ notify('// НЕДОСТАТОЧНО МОНЕТ //','err'); return; }
+  G.coins-=c; G.biz[b.id]=(G.biz[b.id]||0)+1;
+  addXP(10); addCharXp(2); notify('✅ '+b.name,'ok');
+  checkQuests(); save(); redraw(); drawCity();
 }
 function buyUpg(u){
-  if(G.upg[u.id])return;
-  if(G.coins<u.cost){notify('// НЕДОСТАТОЧНО МОНЕТ //','err');return}
-  G.coins-=u.cost;G.upg[u.id]=true;
-  addXP(25);notify('⚡ '+u.name+' АКТИВИРОВАН','inf');
-  save();redraw();
+  if(!isUpgUnlocked(u.id)){ notify('🔒 ВЫПОЛНИ КВЕСТ','err'); return; }
+  if(G.upg[u.id]) return;
+  if(G.coins<u.cost){ notify('// НЕДОСТАТОЧНО МОНЕТ //','err'); return; }
+  G.coins-=u.cost; G.upg[u.id]=true;
+  addXP(25); addCharXp(5); notify('⚡ '+u.name+' АКТИВИРОВАН','inf');
+  checkQuests(); save(); redraw();
+}
+function isBizUnlocked(id){
+  const b=BIZES.find(x=>x.id===id); if(!b) return false;
+  if(!b.unlockQuest) return true;
+  return !!G.questDone[b.unlockQuest];
+}
+function isUpgUnlocked(id){
+  const u=UPGS.find(x=>x.id===id); if(!u) return false;
+  if(!u.unlockQuest) return true;
+  return !!G.questDone[u.unlockQuest];
 }
 
-/* ═══════════════ ИНТЕРФЕЙС ═══════════════ */
+/* ══════════════════════════════════════
+   КВЕСТЫ
+══════════════════════════════════════ */
+function getQuestProgress(q){
+  if(q.type==='taps')      return Math.min(G.taps||0,q.goal);
+  if(q.type==='total')     return Math.min(G.total||0,q.goal);
+  if(q.type==='level')     return Math.min(G.lvl||1,q.goal);
+  if(q.type==='biz_types') return Object.keys(G.biz).filter(k=>G.biz[k]>0).length;
+  if(q.type==='biz_count') return Math.min(G.biz[q.biz]||0,q.goal);
+  if(q.type==='cps')       return Math.min(getCPS(),q.goal);
+  if(q.type==='max_combo') return Math.min(G.maxCombo||0,q.goal);
+  if(q.type==='streak')    return Math.min(G.dailyStreak||0,q.goal);
+  if(q.type==='upg_count') return Object.keys(G.upg).filter(k=>G.upg[k]).length;
+  if(q.type==='refs')      return Math.min(G.refCount||0,q.goal);
+  return 0;
+}
+function checkQuests(){
+  let changed=false;
+  QUESTS.forEach(q=>{
+    if(G.questDone[q.id]) return;
+    if(getQuestProgress(q)>=q.goal){
+      G.questDone[q.id]=true; changed=true;
+      if(q.reward.coins){ G.coins+=q.reward.coins; G.total+=q.reward.coins; }
+      if(q.reward.xp)    addXP(q.reward.xp);
+      if(q.reward.charXp)addCharXp(q.reward.charXp);
+      if(q.reward.achId) unlockAch(q.reward.achId);
+      showQuestComplete(q);
+    }
+  });
+  checkCharQuests();
+  if(changed){ save(); renderQuestBadge(); }
+}
+function checkCharQuests(){
+  CHAR_QUESTS.forEach(cq=>{
+    if(cq.fromLvl!==G.charLvl) return;
+    if(getQuestProgress(cq)>=cq.goal) addCharXp(50);
+  });
+}
+
+let _qQ=[],_qShowing=false;
+function showQuestComplete(q){ _qQ.push(q); if(!_qShowing) showNextQPop(); }
+function showNextQPop(){
+  if(!_qQ.length){ _qShowing=false; return; }
+  _qShowing=true;
+  const q=_qQ.shift();
+  document.getElementById('qpIco').textContent=q.icon;
+  document.getElementById('qpName').textContent=q.name;
+  let rTxt='';
+  if(q.reward.coins) rTxt+='💰 +'+fmt(q.reward.coins)+'¢\n';
+  if(q.reward.xp)    rTxt+='⭐ +'+q.reward.xp+' XP\n';
+  if(q.reward.unlock){
+    const b=BIZES.find(x=>x.id===q.reward.unlock)||UPGS.find(x=>x.id===q.reward.unlock);
+    if(b) rTxt+='🔓 Разблокировано: '+b.name+'\n';
+  }
+  if(q.reward.achId){const a=ACHIEVEMENTS.find(x=>x.id===q.reward.achId);if(a)rTxt+='🏆 '+a.name+'\n';}
+  if(q.reward.charXp) rTxt+='✨ +'+q.reward.charXp+' Харизма\n';
+  document.getElementById('qpReward').textContent=rTxt||'Награда получена!';
+  document.getElementById('qpop').classList.add('show');
+}
+function closeQPop(){ document.getElementById('qpop').classList.remove('show'); setTimeout(showNextQPop,300); }
+
+function unlockAch(id){
+  if(G.achUnlocked[id]) return;
+  G.achUnlocked[id]=true;
+  const a=ACHIEVEMENTS.find(x=>x.id===id);
+  if(a) notify('🏆 '+a.name,'ach');
+}
+function renderQuestBadge(){
+  const unread=QUESTS.filter(q=>!G.questDone[q.id]&&getQuestProgress(q)/q.goal>0.8).length;
+  document.getElementById('questBadge').style.display=unread?'block':'none';
+}
+
+/* ══════════════════════════════════════
+   РЕНДЕР ИНТЕРФЕЙСА
+══════════════════════════════════════ */
 function redraw(){
   document.getElementById('sCoins').textContent=fmt(G.coins);
   document.getElementById('sCps').textContent=fmt(getCPS());
   document.getElementById('sTotal').textContent=fmt(G.total);
   document.getElementById('lvlBadge').textContent='LVL_'+String(G.lvl).padStart(2,'0');
-  const prev=XP_TABLE[G.lvl-1]⠵⠺⠟⠺⠞⠵⠵⠟⠵⠺⠵⠟⠟⠟⠟⠵⠞⠵⠵⠵⠞⠞G.xp;
+  document.getElementById('charBadge').textContent='✨ CHR_'+String(G.charLvl||1).padStart(2,'0');
+  const prev=XP_TABLE[G.lvl-1]||0, next=XP_TABLE[G.lvl]||1e9;
   const pct=next>prev?Math.min(100,(G.xp-prev)/(next-prev)*100):100;
   document.getElementById('xpBar').style.width=pct+'%';
   document.getElementById('xpVal').textContent=fmt(G.xp);
   document.getElementById('xpNext').textContent=next<1e9?'NEXT: '+fmt(next-G.xp):'MAX_LEVEL';
-  renderBiz();renderUpg();updateCombo();
+  renderBiz(); renderUpg(); updateCombo(); renderQuests(); renderChar();
+  renderQuestBadge(); updateRefBadge();
 }
 
 function renderBiz(){
-  const g=document.getElementById('bizGrid');g.innerHTML='';
+  const g=document.getElementById('bizGrid'); g.innerHTML='';
   BIZES.forEach(b=>{
-    const own=G.biz[b.id]||0,cost=bizCost(b);
-    const can=G.coins>=cost,max=own>=999;
+    const own=G.biz[b.id]||0, cost=bizCost(b), unlocked=isBizUnlocked(b.id);
+    const can=unlocked&&G.coins>=cost, max=own>=999;
     const el=document.createElement('div');
-    el.className='biz'+(can&&!max?' can':'')+(max?' max':'');
-    el.innerHTML=<div class="biz-lv">Lv.${own}</div>
-<div class="biz-ico">${b.icon}</div>
-<div class="biz-name">${b.name}</div>
-<div class="biz-inc">+${b.inc}¢/сек · ед.</div>
-<div class="biz-own">Открыто: ${own}</div>
-<div class="biz-cost">${max?'// MAX //':'¢'+fmt(cost)}</div>;
-    if(!max)el.onclick=()=>buyBiz(b);
+    el.className='biz'+(can&&!max?' can':'')+(max?' max':'')+(unlocked?'':' locked');
+    if(!unlocked){
+      const q=QUESTS.find(x=>x.id===b.unlockQuest);
+      const prog=q?getQuestProgress(q):0;
+      const pct=q?Math.floor(prog/q.goal*100):0;
+      el.innerHTML=`<div class="biz-lv">🔒</div><div class="biz-ico">${b.icon}</div><div class="biz-name">${b.name}</div><div class="biz-unlock">${q?q.desc+' ('+pct+'%)':'???'}</div>`;
+    } else {
+      el.innerHTML=`<div class="biz-lv">Lv.${own}</div><div class="biz-ico">${b.icon}</div><div class="biz-name">${b.name}</div><div class="biz-inc">+${b.inc}¢/сек</div><div class="biz-own">Открыто: ${own}</div><div class="biz-cost">${max?'// MAX //':'¢'+fmt(cost)}</div>`;
+    }
+    if(unlocked&&!max) el.onclick=()=>buyBiz(b);
     g.appendChild(el);
   });
 }
 
 function renderUpg(){
-  const l=document.getElementById('upgList');l.innerHTML='';
+  const l=document.getElementById('upgList'); l.innerHTML='';
   UPGS.forEach(u=>{
-    const done=!!G.upg[u.id],can=!done&&G.coins>=u.cost;
+    const done=!!G.upg[u.id], unlocked=isUpgUnlocked(u.id), can=unlocked&&!done&&G.coins>=u.cost;
     const el=document.createElement('div');
-    el.className='upg'+(done?' done':'')+(can?' can':'');
-    el.innerHTML=<div class="upg-ico">${u.icon}</div>
-<div class="upg-info"><div class="upg-name">${u.name}${done?' ✅':''}</div><div class="upg-desc">${u.desc}</div></div>
-<div class="upg-cost">${done?'DONE':'¢'+fmt(u.cost)}</div>;
-    if(!done)el.onclick=()=>buyUpg(u);
+    el.className='upg'+(done?' done':'')+(can?' can':'')+(unlocked?'':' locked');
+    if(!unlocked){
+      const q=QUESTS.find(x=>x.id===u.unlockQuest);
+      const prog=q?getQuestProgress(q):0, pct=q?Math.floor(prog/q.goal*100):0;
+      el.innerHTML=`<div class="upg-ico">🔒</div><div class="upg-info"><div class="upg-name">${u.name}</div><div class="upg-unlock">${q?q.desc+' ('+pct+'%)':'???'}</div></div><div class="upg-cost">???</div>`;
+    } else {
+      el.innerHTML=`<div class="upg-ico">${u.icon}</div><div class="upg-info"><div class="upg-name">${u.name}${done?' ✅':''}</div><div class="upg-desc">${u.desc}</div></div><div class="upg-cost">${done?'DONE':'¢'+fmt(u.cost)}</div>`;
+    }
+    if(unlocked&&!done) el.onclick=()=>buyUpg(u);
     l.appendChild(el);
   });
 }
 
-/* ═══════════════ ТАБЫ ═══════════════ */
+function renderQuests(){
+  const l=document.getElementById('questList'); l.innerHTML='';
+  const sorted=[...QUESTS].sort((a,b)=>{
+    const da=!!G.questDone[a.id], db=!!G.questDone[b.id];
+    if(da&&!db) return 1; if(!da&&db) return -1; return 0;
+  });
+  sorted.forEach(q=>{
+    const done=!!G.questDone[q.id];
+    const prog=getQuestProgress(q), pct=Math.min(100,prog/q.goal*100);
+    const el=document.createElement('div');
+    el.className='quest'+(done?' done':'');
+    let rTxt='';
+    if(q.reward.coins)  rTxt+='¢'+fmt(q.reward.coins)+' ';
+    if(q.reward.xp)     rTxt+='+'+q.reward.xp+'XP ';
+    if(q.reward.unlock){const b=BIZES.find(x=>x.id===q.reward.unlock)||UPGS.find(x=>x.id===q.reward.unlock);if(b)rTxt+='🔓'+b.name+' ';}
+    if(q.reward.achId)  {const a=ACHIEVEMENTS.find(x=>x.id===q.reward.achId);if(a)rTxt+='🏆'+a.name+' ';}
+    if(q.reward.charXp) rTxt+='✨+'+q.reward.charXp+'хар ';
+    el.innerHTML=`<div class="quest-head"><div class="quest-ico">${q.icon}</div><div class="quest-name">${q.name}</div><div class="quest-reward">${done?'✅':'⟩ '+rTxt}</div></div><div class="quest-desc">${q.desc}</div><div class="quest-prog-track"><div class="quest-prog-fill" style="width:${pct}%"></div></div><div class="quest-prog-lbl">${done?'ВЫПОЛНЕНО':fmt(prog)+' / '+fmt(q.goal)}</div>`;
+    l.appendChild(el);
+  });
+  const ag=document.getElementById('achGrid'); ag.innerHTML='';
+  ACHIEVEMENTS.forEach(a=>{
+    const u=!!G.achUnlocked[a.id];
+    const el=document.createElement('div');
+    el.className='ach'+(u?' unlocked':' locked-ach');
+    el.innerHTML=`<div class="ach-ico">${a.icon}</div><div class="ach-name">${a.name}</div><div class="ach-bonus">${u?a.bonus:'???'}</div>`;
+    ag.appendChild(el);
+  });
+}
+
+function renderChar(){
+  const panel=document.getElementById('charPanel');
+  const lvl=G.charLvl||1, data=CHARISMA_LEVELS[lvl-1];
+  const nextData=CHARISMA_LEVELS[lvl]||null;
+  const xp=G.charXp||0, xpReq=nextData?nextData.xpReq:9999;
+  const pct=nextData?Math.min(100,(xp/xpReq)*100):100;
+  let perksHtml='';
+  CHARISMA_LEVELS.forEach((cl,i)=>{
+    perksHtml+=`<span class="charisma-perk${i<lvl?'':' locked-p'}">${cl.icon} ${cl.perk}</span>`;
+  });
+  panel.innerHTML=`
+    <div class="charisma-title">${data.icon} ${data.name} <span class="charisma-lvl">УР. ${lvl}</span></div>
+    <div class="charisma-desc">${data.desc}</div>
+    <div style="margin-bottom:8px">
+      <div class="charisma-bar-track"><div class="charisma-bar-fill" style="width:${pct}%"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:3px">
+        <span style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted)">XP: ${Math.floor(xp)}</span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted)">${nextData?'СЛЕД: '+xpReq:'МАКС'}</span>
+      </div>
+    </div>
+    <div class="charisma-perks">${perksHtml}</div>
+    ${nextData?`<div class="charisma-next">⟩ Следующий: ${nextData.name} — ${nextData.perk}</div>`:''}
+  `;
+  const cql=document.getElementById('charQuestList'); cql.innerHTML='';
+  CHAR_QUESTS.forEach(cq=>{
+    const prog=getQuestProgress(cq), done=cq.fromLvl<lvl, current=cq.fromLvl===lvl;
+    const el=document.createElement('div');
+    el.className='quest'+(done?' done':'');
+    const pct2=Math.min(100,prog/cq.goal*100);
+    el.innerHTML=`<div class="quest-head"><div class="quest-ico">${cq.icon}</div><div class="quest-name">${cq.name}</div><div class="quest-reward">${done?'✅':current?'→ ХАР.'+cq.toLvl:'🔒'}</div></div><div class="quest-desc">${cq.desc}</div><div class="quest-prog-track"><div class="quest-prog-fill" style="width:${done?100:pct2}%"></div></div><div class="quest-prog-lbl">${done?'ВЫПОЛНЕНО':fmt(prog)+' / '+fmt(cq.goal)}</div>`;
+    cql.appendChild(el);
+  });
+}
+
+/* ══════════════════════════════════════
+   ТАБЫ
+══════════════════════════════════════ */
 function goTab(name,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('tab'+name).classList.add('on');
-  btn.classList.add('on');
-  if(name==='City')drawCity();
+  if(btn) btn.classList.add('on');
+  if(name==='City') drawCity();
+  if(name==='Ref')  { renderRef(); updateRefBadge(); }
 }
 
-/* ═══════════════ УВЕДОМЛЕНИЯ ═══════════════ */
+/* ══════════════════════════════════════
+   УВЕДОМЛЕНИЯ
+══════════════════════════════════════ */
 let _nt;
 function notify(msg,type='ok'){
   const el=document.getElementById('notif');
-  el.textContent=msg;el.className='notif '+type+' show';
-  clearTimeout(_nt);_nt=setTimeout(()=>el.classList.remove('show'),2500);
+  el.textContent=msg; el.className='notif '+type+' show';
+  clearTimeout(_nt); _nt=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-/* ═══════════════ ДОЖДЬ ═══════════════ */
+/* ══════════════════════════════════════
+   ДОЖДЬ (CANVAS)
+══════════════════════════════════════ */
 (()=>{
   const c=document.getElementById('rain'),ctx=c.getContext('2d');
-  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
-  resize();window.addEventListener('resize',resize);
+  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
+  resize(); window.addEventListener('resize',resize);
   const drops=Array.from({length:90},()=>({
-    x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
-    sp:3+Math.random()*7,len:10+Math.random()*22,op:.15+Math.random()*.7
+    x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
+    sp:3+Math.random()*7, len:10+Math.random()*22, op:.15+Math.random()*.7
   }));
   (function frame(){
     ctx.clearRect(0,0,c.width,c.height);
     drops.forEach(d=>{
-      ctx.strokeStyle=rgba(0,255,249,${d.op});ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-2,d.y+d.len);ctx.stroke();
-      d.y+=d.sp;if(d.y>c.height+d.len){d.y=-d.len;d.x=Math.random()*c.width}
+      ctx.strokeStyle=`rgba(0,255,249,${d.op})`; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d.x-2,d.y+d.len); ctx.stroke();
+      d.y+=d.sp; if(d.y>c.height+d.len){ d.y=-d.len; d.x=Math.random()*c.width; }
     });
     requestAnimationFrame(frame);
   })();
 })();
 
-/* ═══════════════ ГОРОД (CANVAS) ═══════════════ */
+/* ══════════════════════════════════════
+   ГОРОД CANVAS
+══════════════════════════════════════ */
 let _pulse=0;
-function cityPulse(){_pulse=1;setTimeout(()=>_pulse=0,700)}
+function cityPulse(){ _pulse=1; setTimeout(()=>_pulse=0,700); }
 function hexA(hex,a){
   const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-  returnrgba(${r},${g},${b},${a});
+  return `rgba(${r},${g},${b},${a})`;
 }
-
 function drawCity(){
   const cv=document.getElementById('cityCanvas');
-  const W=cv.offsetWidth||360,H=190;
-  cv.width=W;cv.height=H;
+  const W=cv.offsetWidth||360, H=190;
+  cv.width=W; cv.height=H;
   const ctx=cv.getContext('2d');
-
-  // Небо
   const sky=ctx.createLinearGradient(0,0,0,H);
-  sky.addColorStop(0,'#010208');sky.addColorStop(1,'#060f20');
-  ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-
-  // Перспективная сетка
-  ctx.strokeStyle='rgba(0,255,249,0.07)';ctx.lineWidth=1;
-  for(let x=0;x<W;x+=35){ctx.beginPath();ctx.moveTo(x,H*.65);ctx.lineTo(W/2,H+20);ctx.stroke()}
-
-  // Луна
+  sky.addColorStop(0,'#010208'); sky.addColorStop(1,'#060f20');
+  ctx.fillStyle=sky; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,255,249,0.07)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=35){ ctx.beginPath(); ctx.moveTo(x,H*.65); ctx.lineTo(W/2,H+20); ctx.stroke(); }
   const moon=ctx.createRadialGradient(W*.8,H*.2,0,W*.8,H*.2,20);
-  moon.addColorStop(0,'rgba(0,255,249,.85)');moon.addColorStop(.5,'rgba(0,180,200,.3)');moon.addColorStop(1,'rgba(0,100,150,0)');
-  ctx.beginPath();ctx.arc(W*.8,H*.2,20,0,Math.PI*2);ctx.fillStyle=moon;ctx.fill();
-
-  // Здания
+  moon.addColorStop(0,'rgba(0,255,249,.85)'); moon.addColorStop(.5,'rgba(0,180,200,.3)'); moon.addColorStop(1,'rgba(0,100,150,0)');
+  ctx.beginPath(); ctx.arc(W*.8,H*.2,20,0,Math.PI*2); ctx.fillStyle=moon; ctx.fill();
   let x=8;
   BIZES.forEach((b,bi)=>{
     const count=G.biz[b.id]||0;
     for(let i=0;i<Math.min(count,5);i++){
-      const bw=11+bi*2.8,bh=16+bi*13+(Math.sin(x)*4);
-      const by=H-bh-4;
+      const bw=11+bi*2.8, bh=16+bi*13+(Math.sin(x)*4), by=H-bh-4;
       const gr=ctx.createLinearGradient(x,by,x+bw,by+bh);
-      gr.addColorStop(0,hexA(b.col,.75));gr.addColorStop(1,hexA(b.col,.12));
-      ctx.fillStyle=gr;ctx.fillRect(x,by,bw,bh);
-      ctx.shadowColor=b.col;ctx.shadowBlur=10;
-      ctx.strokeStyle=b.col;ctx.lineWidth=1;
-      ctx.strokeRect(x,by,bw,bh);ctx.shadowBlur=0;
-      // Окна
-      const wr=Math.floor(bh/9),wc=Math.floor(bw/6);
-      for(let r=0;r<wr;r++)for(let c=0;c<wc;c++)
-        if(Math.random()>.35){
-          ctx.fillStyle=Math.random()>.3?hexA(b.col,.9):'rgba(245,230,66,.85)';
-          ctx.fillRect(x+2+c*6,by+4+r*9,3,3);
-        }
-      x+=bw+5;if(x>W-16)x=8;
+      gr.addColorStop(0,hexA(b.col,.75)); gr.addColorStop(1,hexA(b.col,.12));
+      ctx.fillStyle=gr; ctx.fillRect(x,by,bw,bh);
+      ctx.shadowColor=b.col; ctx.shadowBlur=10;
+      ctx.strokeStyle=b.col; ctx.lineWidth=1;
+      ctx.strokeRect(x,by,bw,bh); ctx.shadowBlur=0;
+      const wr=Math.floor(bh/9), wc=Math.floor(bw/6);
+      for(let r=0;r<wr;r++) for(let c=0;c<wc;c++)
+        if(Math.random()>.35){ ctx.fillStyle=Math.random()>.3?hexA(b.col,.9):'rgba(245,230,66,.85)'; ctx.fillRect(x+2+c*6,by+4+r*9,3,3); }
+      x+=bw+5; if(x>W-16) x=8;
     }
   });
-
-  // Свечение земли
   const gl=ctx.createLinearGradient(0,H-28,0,H);
-  gl.addColorStop(0,'rgba(0,255,249,.1)');gl.addColorStop(1,'rgba(0,255,249,0)');
-  ctx.fillStyle=gl;ctx.fillRect(0,H-28,W,28);
-
-  // Пульс при левел-апе
+  gl.addColorStop(0,'rgba(0,255,249,.1)'); gl.addColorStop(1,'rgba(0,255,249,0)');
+  ctx.fillStyle=gl; ctx.fillRect(0,H-28,W,28);
   if(_pulse){
-    ctx.beginPath();ctx.arc(W/2,H/2,55,0,Math.PI*2);
-    ctx.strokeStyle='rgba(0,255,249,.8)';ctx.lineWidth=3;
-    ctx.shadowColor='#00fff9';ctx.shadowBlur=25;ctx.stroke();ctx.shadowBlur=0;
+    ctx.beginPath(); ctx.arc(W/2,H/2,55,0,Math.PI*2);
+    ctx.strokeStyle='rgba(0,255,249,.8)'; ctx.lineWidth=3;
+    ctx.shadowColor='#00fff9'; ctx.shadowBlur=25; ctx.stroke(); ctx.shadowBlur=0;
   }
 }
 
-/* ═══════════════ ИГРОВОЙ ЦИКЛ ═══════════════ */
+/* ══════════════════════════════════════
+   ИГРОВОЙ ЦИКЛ
+══════════════════════════════════════ */
 setInterval(()=>{
   const inc=getCPS()/10;
-  if(inc>0){G.coins+=inc;G.total+=inc;addXP(.01)}
-  redraw();save();drawCity();
+  if(inc>0){ G.coins+=inc; G.total+=inc; addXP(.005); }
+  tickRefIncome();
+  checkQuests();
+  redraw(); save(); drawCity();
 },100);
 
-/* ═══════════════ СТАРТ ═══════════════ */
-load();redraw();drawCity();
+/* ══════════════════════════════════════
+   СТАРТ
+══════════════════════════════════════ */
+load();
+redraw(); drawCity(); updateDailyBtn();
+setTimeout(checkQuests,500);
 if(window.Telegram?.WebApp){
   window.Telegram.WebApp.ready();
   window.Telegram.WebApp.expand();
   window.Telegram.WebApp.setHeaderColor('#02040e');
+  // Получаем реферальный ID из start_param
+  const startParam=window.Telegram.WebApp.initDataUnsafe?.start_param;
+  if(startParam&&startParam.startsWith('ref_')){
+    // В реальном боте здесь был бы запрос к серверу.
+    // Здесь просто показываем уведомление.
+    setTimeout(()=>notify('🎁 ТЫ ПРИШЁЛ ПО РЕФЕРАЛЬНОЙ ССЫЛКЕ!','ref'),1500);
+  }
 }
 </script>
 </body>
